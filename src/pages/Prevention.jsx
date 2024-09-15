@@ -1,25 +1,28 @@
 import React from "react";
 import { Droplet, Pill, ShieldCheck } from "lucide-react";
 import Card from "../components/Card";
+import { useTranslation } from "react-i18next";
+
 const Prevention = () => {
+    const { t } = useTranslation();
     return(
 <div className="bg-[#f3f4f6] md:px-32 p-16">
-        <div className="text-3xl font-semibold text-center">Prevention Methods</div>
+        <div className="text-3xl font-semibold text-center">{t("prevention_title")}</div>
         <div className="grid grid-cols-1 md:grid-cols-3 items-center mt-4 md:space-x-4">
         <Card
             icon = <ShieldCheck className="text-[#21c55d]"/>
-            title = "Bed Nets"
-            content = "Use insecticide-treated bed nets to protect against mosquito bites while sleeping."
+            title = {t("bed_nets_title")}
+            content = {t("bed_nets_content")}
         />
         <Card
             icon = <Droplet className="text-[#2463eb]"/>
-            title = "Insect Repellent"
-            content = "Apply insect repellent to exposed skin when outdoors, especially during peak mosquito hours."
+            title = {t("insect_repellent_title")}
+            content = {t("insect_repellent_content")}
         />
         <Card
             icon = <Pill className="text-[#B77AF4]"/>
-            title = "Preventive Medicine"
-            content = "Take preventive medications as prescribed when traveling to malaria-endemic areas."
+            title = {t("preventive_medicine_title")}
+            content = {t("preventive_medicine_content")}
         />
         </div>
         </div>

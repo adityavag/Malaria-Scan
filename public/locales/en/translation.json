@@ -1,0 +1,20 @@
+{
+    "title": "Malaria Scan",
+    "detect_malaria": "Detect Malaria with AI",
+    "prevent_outbreaks": "Prevent Malaria Outbreaks",
+    "description": "Our cutting-edge AI technology analyzes blood smear images to quickly and accurately detect malaria parasites. By providing early detection, we help prevent outbreaks and save lives in at-risk communities.",
+    "features_title": "Our Features",
+    "fast_results_title": "Fast Results",
+    "fast_results_content": "Get malaria detection results within seconds of uploading your image.",
+    "high_accuracy_title": "High Accuracy",
+    "high_accuracy_content": "Our AI model is trained on thousands of blood smear images for reliable results.",
+    "user_friendly_title": "User Friendly",
+    "user_friendly_content": "Simple interface for quick and hassle-free malaria detection.",
+    "prevention_title": "Prevention Methods",
+    "bed_nets_title": "Bed Nets",
+    "bed_nets_content": "Use insecticide-treated bed nets to protect against mosquito bites while sleeping.",
+    "insect_repellent_title": "Insect Repellent",
+    "insect_repellent_content": "Apply insect repellent to exposed skin when outdoors, especially during peak mosquito hours.",
+    "preventive_medicine_title": "Preventive Medicine",
+    "preventive_medicine_content": "Take preventive medications as prescribed when traveling to malaria-endemic areas."
+}
