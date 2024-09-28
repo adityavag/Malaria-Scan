@@ -25,6 +25,10 @@ export default function Navbar() {
                     <option value="en" className='bg-white'>English</option>
                     <option value="ta" className='bg-white'>தமிழ்</option>
                     <option value="hi" className='bg-white'>हिन्दी</option>
+                    <option value="ma" className='bg-white'>മലയാളം</option>
+                    <option value="ka" className='bg-white'>ಕನ್ನಡ</option>
+                    <option value="pa" className='bg-white'>ਪੰਜਾਬੀ</option>
+                    <option value="mr" className='bg-white'>मराठी</option>
                 </select>
             </div>
         </div>
