@@ -1,4 +1,5 @@
 {
+    "click": "Check for Malaria",
     "title": "Malaria Scan",
     "detect_malaria": "Detect Malaria with AI",
     "prevent_outbreaks": "Prevent Malaria Outbreaks",

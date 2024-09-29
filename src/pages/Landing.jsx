@@ -13,6 +13,9 @@ const Landing = () => {
                     <div className="text-5xl font-bold">{t("detect_malaria")}</div>
                     <div className="text-3xl font-semibold text-[#2463eb]">{t("prevent_outbreaks")}</div>
                     <div className="text-[#4b5563]">{t("description")}</div>
+                    <div>
+                    </div>
+                    <button className="bg-[#2463eb] p-2 w-1/2 rounded-md mx-auto md:mx-0 text-white font-semibold text-xl">{t("click")}</button>
                 </div>
                 <Lottie animationData={Art} loop={true} />
             </div>
