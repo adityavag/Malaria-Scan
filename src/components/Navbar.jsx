@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react'
 import i18n from '../i18n';
 import { useTranslation } from 'react-i18next';
-import { Globe } from 'lucide-react';
+import { Globe, Layout } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 
 export default function Navbar() {
@@ -20,7 +21,9 @@ export default function Navbar() {
     return (
         <div className="fixed top-0 left-0 right-0 bg-white bg-opacity-70 shadow-md w-full p-4 z-50 mb-4">
             <div className='flex flex-row items-center space-x-2 justify-between'>
+            <Link to="/">
             <div className='text-2xl font-bold text-[#2463eb]'>{t("title")}</div>
+            </Link>
                 <select onChange={handleLanguageChange} defaultValue={localStorage.getItem('i18nextLng')||'en'} className="border p-2 rounded-md bg-white">
                     <option value="en" className='bg-white'>English</option>
                     <option value="ta" className='bg-white'>தமிழ்</option>
