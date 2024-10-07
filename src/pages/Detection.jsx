@@ -28,7 +28,7 @@ const Detection = () => {
     <Navbar/>
     <div className="mt-28 text-3xl font-bold text-center">Upload Blood Smear Slide Image</div>
           <div className="grid grid-cols-1 mx-auto w-1/2 item-center justify-center min-h-screen mt-10 max-lg:w-full max-lg:px-2">
-      <div className="p-4 flex justify-center items-center border-2 border-black rounded-md h-[500px]">
+      <div className="p-4 mx-6 flex justify-center items-center border-2 border-black rounded-md h-[500px]">
         {image ? (
           <img
             src={URL.createObjectURL(image)}
