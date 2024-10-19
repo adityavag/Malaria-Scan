@@ -31,6 +31,7 @@ const Detection = () => {
         "Access-Control-Allow-Origin": "*",
       },
     }).then((result) => {
+      console.log(result);
       const a = result.data[0].prediction[0][0];
       const b = result.data[0].prediction[0][1];
       a > b ? answer = "Infected" : "Uninfected";
@@ -110,16 +111,6 @@ const Detection = () => {
           </Typography>
         </Box>
       </Modal>
-        {/* <Modal
-          enterAnimation="fade"
-          exitAnimation="fade"
-          timeout={250}
-          isOpen={open}
-          onClose={() => setOpen(false)}
-          titleElement={<div className="">{t("prediction_result")}</div>}
-        >
-          <div>{result}</div>
-        </Modal> */}
       </div>
     );
   }
