@@ -1,8 +1,27 @@
-# React + Vite
+# Forecasting Malaria Parasite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+It is a web-based application designed to enhance the early detection and forecasting of malaria parasites using deep learning techniques. This application allows users to upload blood smear slide images for analysis and provides insights into malaria detection.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+| Feature                     | Description                                                                                         |
+|-----------------------------|-----------------------------------------------------------------------------------------------------|
+| **Upload Image**            | Users can upload blood smear slide images for analysis.                                  |
+| **Get Image Prediction**     | Click the "Run Model" button to initiate the analysis of the uploaded image. |
+| **Multilingual Support**     | The portal supports multiple languages, allowing users to view information in their preferred language. |
+| **Simple and Clean UI**     | A simple, uncluttered, and intuitive interface designed for ease of use.                           |
+
+## Technologies Used
+<ul>
+  <li>React</li>
+  <li>Flask</li>
+  <li>Tailwind CSS</li>
+  <li>Material UI</li>
+  <li>i18Next</li>
+</ul>
+
+## Project Contributors
+<ul>
+  <li>Aditya Vardhan Agarwal</li>
+  <li>Aryan Adlakha</li>
+</ul>
