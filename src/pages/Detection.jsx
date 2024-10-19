@@ -6,8 +6,6 @@ import { UploadIcon } from "lucide-react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import LoadingArt from "../assets/lottie/Loading.json";
-import Modal from "react-lean-modal";
-// import Modal from "react-responsive-modal";
 
 const Detection = () => {
   var answer;
@@ -86,7 +84,7 @@ const Detection = () => {
             <span className="">{t("upload_and_analyse")}</span>
           </button>
         </div>
-        <Modal
+        {/* <Modal
           enterAnimation="fade"
           exitAnimation="fade"
           timeout={250}
@@ -95,7 +93,7 @@ const Detection = () => {
           titleElement={<div className="">{t("prediction_result")}</div>}
         >
           <div>{result}</div>
-        </Modal>
+        </Modal> */}
       </div>
     );
   }
