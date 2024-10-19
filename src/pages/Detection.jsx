@@ -6,6 +6,7 @@ import { UploadIcon } from "lucide-react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import LoadingArt from "../assets/lottie/Loading.json";
+import { Box, Modal, Typography } from "@mui/material";
 
 const Detection = () => {
   var answer;
@@ -84,6 +85,31 @@ const Detection = () => {
             <span className="">{t("upload_and_analyse")}</span>
           </button>
         </div>
+        <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{
+          width: '300px',
+          bgcolor: 'background.paper',
+          borderRadius: 2,
+          boxShadow: 24,
+          p: 4,
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}>
+          <Typography id="modal-modal-title" variant="h6" component="h2" align="center">
+            {t("prediction_result")}
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }} align="center">
+            {result}
+          </Typography>
+        </Box>
+      </Modal>
         {/* <Modal
           enterAnimation="fade"
           exitAnimation="fade"
