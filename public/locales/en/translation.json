@@ -17,5 +17,8 @@
     "insect_repellent_title": "Insect Repellent",
     "insect_repellent_content": "Apply insect repellent to exposed skin when outdoors, especially during peak mosquito hours.",
     "preventive_medicine_title": "Preventive Medicine",
-    "preventive_medicine_content": "Take preventive medications as prescribed when traveling to malaria-endemic areas."
+    "preventive_medicine_content": "Take preventive medications as prescribed when traveling to malaria-endemic areas.",
+    "detect_title": "Upload Blood Smear Slide Image",
+    "upload_and_analyse": "Upload and Analyse",
+    "prediction_result": "Prediction Result"
 }

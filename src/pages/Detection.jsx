@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import Upload from "../assets/lottie/Upload.json";
 import Scan from "../assets/lottie/Scan.json";
 import Lottie from "lottie-react";
 import { useTranslation } from "react-i18next";
-import { Flag, SquareScissors, UploadIcon } from "lucide-react";
+import { UploadIcon } from "lucide-react";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import LoadingArt from "../assets/lottie/Loading.json";
+import Modal from "react-lean-modal";
+// import Modal from "react-responsive-modal";
 
 const Detection = () => {
+  var answer;
   const [image, setImage] = useState(null);
+  const [open, setOpen] = useState(false);
   const [data, setData] = useState({});
   const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
+  const [result, setResult] = useState("");
 
   const onImageChange = (e) => {
     setImage(e.target.files[0]);
@@ -23,19 +27,23 @@ const Detection = () => {
     const form_data = new FormData();
     form_data.append("file", image);
     axios.post('http://127.0.0.1:5000/predict', form_data, {
-        headers: {
-            'Content-Type': 'multipart/form-data',
-            "Access-Control-Allow-Origin": "*",
-        },
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        "Access-Control-Allow-Origin": "*",
+      },
     }).then((result) => {
       const a = result.data[0].prediction[0][0];
       const b = result.data[0].prediction[0][1];
-      let answer;
       a > b ? answer = "Infected" : "Uninfected";
+      if(answer == "Infected") answer = t("infected")
+      else answer = t("unifected")   
       setTimeout(() => {
-        setLoading(false); 
-        alert(answer);
-      },2000);
+        setLoading(false);
+        setOpen(true)       
+        setResult(answer);
+        setImage(null);
+        console.log(answer);
+      }, 2000);
     }).catch((err) => {
       console.log(err);
     })
@@ -47,12 +55,11 @@ const Detection = () => {
       setImage(selectedImage);
     }
   };
-  if(loading == false)
-  {
+  if (loading == false) {
     return (
       <div className="">
         <Navbar />
-        <div className="mt-28 text-3xl font-bold text-center">Upload Blood Smear Slide Image</div>
+        <div className="mt-28 text-3xl font-bold text-center">{t("detect_title")}</div>
         <div className="grid grid-cols-1 mx-auto w-1/2 item-center justify-center min-h-screen mt-10 max-lg:w-full max-lg:px-2">
           <div className="p-4 mx-6 flex justify-center items-center border-2 border-black rounded-md h-[500px]">
             {image ? (
@@ -76,17 +83,26 @@ const Detection = () => {
             onClick={onPost}
           >
             <UploadIcon />
-            <span className="">Upload and Analyse</span>
+            <span className="">{t("upload_and_analyse")}</span>
           </button>
         </div>
+        <Modal
+          enterAnimation="fade"
+          exitAnimation="fade"
+          timeout={250}
+          isOpen={open}
+          onClose={() => setOpen(false)}
+          titleElement={<div className="">{t("prediction_result")}</div>}
+        >
+          <div>{result}</div>
+        </Modal>
       </div>
     );
   }
-  else
-  {
+  else {
     return (
       <div className="flex justify-center h-screen items-center">
-        <Lottie animationData={LoadingArt} loop={true} className="h-[100px] w-[100px]"/>
+        <Lottie animationData={LoadingArt} loop={true} className="h-[100px] w-[100px]" />
       </div>
     )
   }
