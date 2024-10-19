@@ -1,6 +1,6 @@
 from flask import Flask, request ,jsonify
 from flask_cors import CORS, cross_origin
-from keras.models import load_model #type: ignore
+from keras.models import load_model
 from PIL import Image, ImageOps
 import numpy as np
 import os
@@ -8,7 +8,8 @@ import os
 
 app = Flask(__name__)
 cors = CORS(app)
-model = load_model('model_vgg19.h5')
+# model = load_model('model_vgg19.h5')
+model = load_model('best_resnet_model.keras')
 
 def preprocess_image(image):
     image = image.resize((224,224))
