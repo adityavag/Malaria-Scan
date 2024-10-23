@@ -7,44 +7,16 @@ import Navbar from "../components/Navbar";
 import axios from "axios";
 import LoadingArt from "../assets/lottie/Loading.json";
 import { Box, Modal, Typography } from "@mui/material";
+import SheildArt from "../assets/lottie/Sheild.json";
+import InfectedArt from "../assets/lottie/Infected.json";
 
 const Detection = () => {
-  var answer;
   const [image, setImage] = useState(null);
+  const [infected, setInfected] = useState(false);
   const [open, setOpen] = useState(false);
-  const [data, setData] = useState({});
-  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
-
-  const onImageChange = (e) => {
-    setImage(e.target.files[0]);
-  }
-
-  const onPost = async (e) => {
-    setLoading(true)
-    const form_data = new FormData();
-    form_data.append("file", image);
-    axios.post('http://127.0.0.1:5000/predict', form_data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        "Access-Control-Allow-Origin": "*",
-      },
-    }).then((result) => {
-      let answer = result.data.prediction
-      console.log(answer)
-      answer == "Parasitized" ? answer = t("infected") : answer = t("uninfected")
-      setTimeout(() => {
-        setLoading(false);
-        setOpen(true)
-        setResult(answer);
-        setImage(null);
-        console.log(answer);
-      }, 2000);
-    }).catch((err) => {
-      console.log(err);
-    })
-  }
+  const { t } = useTranslation();
 
   const handleFileChange = (event) => {
     const selectedImage = event.target.files[0];
@@ -52,7 +24,37 @@ const Detection = () => {
       setImage(selectedImage);
     }
   };
-  if (loading == false) {
+
+  const onPost = async () => {
+    setLoading(true);
+    const form_data = new FormData();
+    form_data.append("file", image);
+    axios
+      .post("http://127.0.0.1:5000/predict", form_data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+        },
+      })
+      .then((result) => {
+        const prediction = result.data.prediction;
+        const isInfected = prediction === "Parasitized";
+        setInfected(isInfected);
+        const displayResult = isInfected ? t("infected") : t("uninfected");
+
+        setTimeout(() => {
+          setLoading(false);
+          setOpen(true);
+          setResult(displayResult);
+          setImage(null);
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  if (!loading) {
     return (
       <div className="">
         <Navbar />
@@ -90,33 +92,37 @@ const Detection = () => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={{
-            width: '300px',
-            bgcolor: 'background.paper',
-            borderRadius: 2,
-            boxShadow: 24,
-            p: 4,
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)'
-          }}>
+              width: '300px',
+              bgcolor: 'background.paper',
+              borderRadius: 2,
+              boxShadow: 24,
+              p: 4,
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)'
+            }}>
             <Typography id="modal-modal-title" variant="h6" component="h2" align="center">
               {t("prediction_result")}
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }} align="center">
-              {result}
+              {infected ? (
+                <Lottie animationData={InfectedArt} loop={true} />
+              ) : (
+                <Lottie animationData={SheildArt} loop={true} />
+              )}
+              <div>{result}</div>
             </Typography>
           </Box>
         </Modal>
       </div>
     );
-  }
-  else {
+  } else {
     return (
       <div className="flex justify-center h-screen items-center">
         <Lottie animationData={LoadingArt} loop={true} className="h-[100px] w-[100px]" />
       </div>
-    )
+    );
   }
 };
 
