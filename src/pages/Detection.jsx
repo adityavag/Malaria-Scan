@@ -31,15 +31,12 @@ const Detection = () => {
         "Access-Control-Allow-Origin": "*",
       },
     }).then((result) => {
-      console.log(result);
-      const a = result.data[0].prediction[0][0];
-      const b = result.data[0].prediction[0][1];
-      a > b ? answer = "Infected" : "Uninfected";
-      if(answer == "Infected") answer = t("infected")
-      else answer = t("unifected")   
+      let answer = result.data.prediction
+      console.log(answer)
+      answer == "Parasitized" ? answer = t("infected") : answer = t("uninfected")
       setTimeout(() => {
         setLoading(false);
-        setOpen(true)       
+        setOpen(true)
         setResult(answer);
         setImage(null);
         console.log(answer);
@@ -87,30 +84,30 @@ const Detection = () => {
           </button>
         </div>
         <Modal
-        open={open}
-        onClose={() => setOpen(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{
-          width: '300px',
-          bgcolor: 'background.paper',
-          borderRadius: 2,
-          boxShadow: 24,
-          p: 4,
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)'
-        }}>
-          <Typography id="modal-modal-title" variant="h6" component="h2" align="center">
-            {t("prediction_result")}
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }} align="center">
-            {result}
-          </Typography>
-        </Box>
-      </Modal>
+          open={open}
+          onClose={() => setOpen(false)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={{
+            width: '300px',
+            bgcolor: 'background.paper',
+            borderRadius: 2,
+            boxShadow: 24,
+            p: 4,
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)'
+          }}>
+            <Typography id="modal-modal-title" variant="h6" component="h2" align="center">
+              {t("prediction_result")}
+            </Typography>
+            <Typography id="modal-modal-description" sx={{ mt: 2 }} align="center">
+              {result}
+            </Typography>
+          </Box>
+        </Modal>
       </div>
     );
   }

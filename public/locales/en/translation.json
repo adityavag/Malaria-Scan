@@ -21,5 +21,6 @@
     "detect_title": "Upload Blood Smear Slide Image",
     "upload_and_analyse": "Upload and Analyse",
     "infected": "Infected",
+    "uninfected": "Un-Infected",
     "prediction_result": "Prediction Result"
 }

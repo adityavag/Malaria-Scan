@@ -1,37 +1,50 @@
-from flask import Flask, request ,jsonify
-from flask_cors import CORS, cross_origin
-from keras.models import load_model
-from PIL import Image, ImageOps
-import numpy as np
 import os
-
+import numpy as np
+import cv2
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+from keras.models import load_model
+from keras.preprocessing.image import img_to_array
 
 app = Flask(__name__)
-cors = CORS(app)
-# model = load_model('model_vgg19.h5')
-model = load_model('best_resnet_model.keras')
+CORS(app)
 
-def preprocess_image(image):
-    image = image.resize((224,224))
-    image = np.array(image)
-    image = image/255.0
-    image = np.expand_dims(image, axis=0)
-    return image
+# Load the trained model
+model = load_model('a95e30model.h5')  # Adjust the path
+
+# Define the input shape of the model
+input_shape = (50, 50, 3)
 
 @app.route('/predict', methods=['POST'])
-@cross_origin()
 def predict():
-    print(request)
+    # Check if an image was provided in the request
     if 'file' not in request.files:
-        return jsonify({
-            "error" : "No file uploaded"
-        }, 400)
+        return jsonify({'error': 'No file provided'}), 400
+    
     file = request.files['file']
-    img = Image.open(file.stream)
-    img = preprocess_image(img)
-    prediction = model.predict(img)
-    print(prediction)
-    return jsonify({'prediction': prediction.tolist()},200)
+    
+    # Check if the file is an image
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
 
-if __name__  == "__main__":
+    # Read and preprocess the image
+    img = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
+    
+    if img is None:
+        return jsonify({'error': 'Invalid image'}), 400
+
+    img = cv2.resize(img, (50, 50))
+    img_array = img_to_array(img) / 255.0  # Normalize the image
+    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+
+    # Make a prediction
+    predictions = model.predict(img_array)
+    class_idx = np.argmax(predictions[0])  # Get the index of the class with the highest probability
+    
+    # Return the prediction result
+    result = 'Parasitized' if class_idx == 1 else 'Uninfected'
+    return jsonify({'prediction': result, 'confidence': predictions[0].tolist()})
+
+
+if __name__ == '__main__':
     app.run(debug=True)

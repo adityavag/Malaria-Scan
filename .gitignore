@@ -298,3 +298,4 @@ pip-selfcheck.json
 # End of https://www.toptal.com/developers/gitignore/api/flask,python,virtualenv
 api/model_vgg19.h5
 api/best_resnet_model.keras
+api/a95e30model.h5
