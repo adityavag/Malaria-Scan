@@ -9,39 +9,31 @@ from keras.preprocessing.image import img_to_array
 app = Flask(__name__)
 CORS(app)
 
-# Load the trained model
-model = load_model('a95e30model.h5')  # Adjust the path
+model = load_model('a95e30model.h5') 
 
-# Define the input shape of the model
 input_shape = (50, 50, 3)
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Check if an image was provided in the request
     if 'file' not in request.files:
         return jsonify({'error': 'No file provided'}), 400
     
     file = request.files['file']
     
-    # Check if the file is an image
     if file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
 
-    # Read and preprocess the image
     img = cv2.imdecode(np.frombuffer(file.read(), np.uint8), cv2.IMREAD_COLOR)
     
     if img is None:
         return jsonify({'error': 'Invalid image'}), 400
 
     img = cv2.resize(img, (50, 50))
-    img_array = img_to_array(img) / 255.0  # Normalize the image
-    img_array = np.expand_dims(img_array, axis=0)  # Add batch dimension
+    img_array = img_to_array(img) / 255.0 
+    img_array = np.expand_dims(img_array, axis=0) 
 
-    # Make a prediction
     predictions = model.predict(img_array)
-    class_idx = np.argmax(predictions[0])  # Get the index of the class with the highest probability
-    
-    # Return the prediction result
+    class_idx = np.argmax(predictions[0]) 
     result = 'Parasitized' if class_idx == 1 else 'Uninfected'
     return jsonify({'prediction': result, 'confidence': predictions[0].tolist()})
 
