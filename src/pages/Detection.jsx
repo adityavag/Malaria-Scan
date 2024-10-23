@@ -9,13 +9,14 @@ import LoadingArt from "../assets/lottie/Loading.json";
 import { Box, Modal, Typography } from "@mui/material";
 import SheildArt from "../assets/lottie/Sheild.json";
 import InfectedArt from "../assets/lottie/Infected.json";
-
+import BadRequest from "../assets/images/BadRequest.jpg";
 const Detection = () => {
   const [image, setImage] = useState(null);
   const [infected, setInfected] = useState(false);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState("");
+  const [error, setError] = useState(""); 
   const { t } = useTranslation();
 
   const handleFileChange = (event) => {
@@ -27,32 +28,48 @@ const Detection = () => {
 
   const onPost = async () => {
     setLoading(true);
+    setError(""); 
     const form_data = new FormData();
     form_data.append("file", image);
-    axios
-      .post("http://127.0.0.1:5000/predict", form_data, {
+    try {
+      const response = await axios.post("http://127.0.0.1:5000/predict", form_data, {
         headers: {
           "Content-Type": "multipart/form-data",
           "Access-Control-Allow-Origin": "*",
         },
-      })
-      .then((result) => {
-        const prediction = result.data.prediction;
-        const isInfected = prediction === "Parasitized";
-        setInfected(isInfected);
-        const displayResult = isInfected ? t("infected") : t("uninfected");
-
-        setTimeout(() => {
-          setLoading(false);
-          setOpen(true);
-          setResult(displayResult);
-          setImage(null);
-        }, 2000);
-      })
-      .catch((err) => {
-        console.log(err);
       });
+
+      
+      if (response.status !== 200) {
+        throw new Error("Error");
+      }
+
+      const prediction = response.data.prediction;
+      const isInfected = prediction === "Parasitized";
+      const displayResult = isInfected ? t("infected") : t("uninfected");
+
+      setTimeout(() => {
+        setLoading(false);
+        setOpen(true);
+        setResult(displayResult);
+        setImage(null);
+      }, 2000);
+    } catch (err) {
+      setTimeout(() => {
+        setLoading(false);
+        setError("Error");
+        console.error(err);
+      }, 2000);
+    }
   };
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <img src={BadRequest} height={100} width={700} className="animate-up-down"/>
+      </div>
+    );
+  }
 
   if (!loading) {
     return (
