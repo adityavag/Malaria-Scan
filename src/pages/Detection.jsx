@@ -46,6 +46,7 @@ const Detection = () => {
 
       const prediction = response.data.prediction;
       const isInfected = prediction === "Parasitized";
+      setInfected(isInfected);
       const displayResult = isInfected ? t("infected") : t("uninfected");
 
       setTimeout(() => {
